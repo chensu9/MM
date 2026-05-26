@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MM Store | Fluid Brutalism</title>
+    <style>
+        /* Базовые настройки и переменные */
+        :root {
+            --vantablack: #050505;
+            --chrome: #E0E0E0;
+            --glass: rgba(255, 255, 255, 0.05);
+            --toxic-accent: #39FF14; /* Неоново-зеленый акцент */
+            --scroll: 0; /* Базовая переменная для параллакса */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--vantablack);
+            color: var(--chrome);
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            overflow-x: hidden;
+            cursor: none; /* Скрываем стандартный курсор */
+        }
+
+        /* --- ПЛАВАЮЩАЯ ШАПКА --- */
+        header {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            clip-path: polygon(0 0, 100% 5%, 98% 100%, 2% 90%);
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+
+        header:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--toxic-accent);
+        }
+
+        .menu-btn, .cart-btn {
+            font-size: 1.2rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            transition: color 0.3s;
+        }
+
+        .menu-btn:hover, .cart-btn:hover {
+            color: var(--toxic-accent);
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 900;
+            letter-spacing: -2px;
+            transform: skewX(-10deg);
+        }
+
+        /* --- ГЛАВНЫЙ ЭКРАН --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 6vw;
+            font-weight: 900;
+            line-height: 1.1;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 10px rgba(255, 255, 255, 0.2), -2px -2px 10px rgba(0, 0, 0, 0.8);
+            margin-bottom: 40px;
+            z-index: 2;
+        }
+
+        .brutal-btn {
+            background: transparent;
+            color: var(--chrome);
+            padding: 20px 50px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            border: 2px solid var(--chrome);
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            z-index: 2;
+        }
+
+        .brutal-btn:hover {
+            background: var(--toxic-accent);
+            color: var(--vantablack);
+            border-color: var(--toxic-accent);
+            clip-path: polygon(0 0, 100% 10%, 100% 100%, 10% 90%);
+        }
+
+        .fluid-blob {
+            position: absolute;
+            width: 50vw;
+            height: 50vw;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(0,0,0,0) 70%);
+            filter: blur(60px);
+            z-index: 1;
+            animation: pulse 8s infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1) translate(0, 0); }
+            100% { transform: scale(1.2) translate(5%, 5%); }
+        }
+
+        /* --- СЕКЦИЯ КАТЕГОРИЙ --- */
+        .categories {
+            min-height: 120vh;
+            position: relative;
+            background-color: var(--vantablack);
+            overflow: hidden;
+            padding: 100px 0;
+        }
+
+        /* Общие стили для осколков */
+        .splinter {
+            position: absolute;
+            overflow: hidden;
+            cursor: none; 
+            /* Параллакс-сдвиг */
+            transform: translateY(calc(var(--scroll) * var(--speed, 0) * 1px));
+            transition: clip-path 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        /* Искажение при наведении */
+        .splinter:hover {
+            z-index: 10;
+            transform: translateY(calc(var(--scroll) * var(--speed, 0) * 1px)) scale(1.05) rotate(2deg);
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), clip-path 0.5s;
+        }
+
+        .splinter-bg {
+            position: absolute;
+            top: -10%; left: -10%; right: -10%; bottom: -10%;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.8s ease;
+        }
+
+        .splinter-glass-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+            mix-blend-mode: overlay;
+        }
+
+        .splinter:hover .splinter-bg {
+            transform: scale(1.1);
+            filter: grayscale(0%) contrast(1.2);
+        }
+
+        /* ИСПРАВЛЕННЫЙ ТЕКСТ: Центрирование */
+        .splinter-title {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            width: 90%;
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--chrome);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
+            z-index: 2;
+            pointer-events: none; /* Чтобы текст не перебивал hover-эффект */
+        }
+
+        /* --- ИНДИВИДУАЛЬНЫЕ ФОРМЫ (CLIP-PATH) И СКОРОСТИ --- */
+        .splinter-1 {
+            --speed: -0.15;
+            width: 30vw;
+            height: 60vh;
+            top: 10%;
+            left: 10%;
+            clip-path: polygon(15% 0, 100% 5%, 85% 100%, 0 95%);
+        }
+        .bg-1 { background: linear-gradient(45deg, #1a1a1a, #333); filter: grayscale(100%); }
+
+        .splinter-2 {
+            --speed: 0.1;
+            width: 45vw;
+            height: 40vh;
+            top: 40%;
+            right: 5%;
+            clip-path: polygon(0 15%, 100% 0, 95% 100%, 5% 85%);
+        }
+        .bg-2 { background: linear-gradient(200deg, #222, #0a0a0a); filter: grayscale(100%); }
+
+        .splinter-3 {
+            --speed: -0.25;
+            width: 25vw;
+            height: 35vh;
+            bottom: 5%;
+            left: 40%;
+            clip-path: polygon(50% 0%, 100% 25%, 80% 100%, 20% 90%);
+        }
+        .bg-3 { background: linear-gradient(90deg, #111, #2a2a2a); filter: grayscale(100%); }
+
+        .splinter-1:hover { clip-path: polygon(10% 2%, 95% 0%, 90% 95%, 5% 100%); }
+        .splinter-2:hover { clip-path: polygon(5% 10%, 95% 5%, 100% 95%, 0% 90%); }
+        .splinter-3:hover { clip-path: polygon(45% 5%, 95% 30%, 85% 95%, 15% 85%); }
+
+        /* --- СТИЛИ КАСТОМНОГО КУРСОРA --- */
+        .cursor-dot {
+            position: fixed;
+            top: 0; left: 0; width: 6px; height: 6px;
+            background-color: var(--chrome); border-radius: 50%;
+            pointer-events: none; z-index: 10000; transform: translate(-50%, -50%); 
+        }
+
+        .cursor-trail {
+            position: fixed;
+            top: 0; left: 0; width: 40px; height: 40px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 50%;
+            pointer-events: none; z-index: 9999;
+            backdrop-filter: blur(6px) grayscale(50%); -webkit-backdrop-filter: blur(6px) grayscale(50%);
+            transform: translate(-50%, -50%);
+            transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease;
+        }
+
+        .cursor-trail.hovered {
+            width: 60px; height: 60px;
+            background: rgba(57, 255, 20, 0.1); border-color: var(--toxic-accent);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="menu-btn">///</div>
+        <div class="logo">MM</div>
+        <div class="cart-btn">◬</div>
+    </header>
+
+    <section class="hero">
+        <div class="fluid-blob"></div>
+        <h1>Форма.<br>Искажение.<br>Смысл.</h1>
+        <button class="brutal-btn" onclick="document.getElementById('categories-section').scrollIntoView({behavior: 'smooth'});">ВОЙТИ В ИЗМЕРЕНИЕ</button>
+    </section>
+
+    <section class="categories" id="categories-section">
+        <div class="splinter splinter-1">
+            <div class="splinter-bg bg-1"></div>
+            <div class="splinter-glass-overlay"></div>
+            <h2 class="splinter-title">МУЖСКАЯ<br>ФОРМА</h2>
+        </div>
+
+        <div class="splinter splinter-2">
+            <div class="splinter-bg bg-2"></div>
+            <div class="splinter-glass-overlay"></div>
+            <h2 class="splinter-title">ЖЕНСКАЯ<br>ФОРМА</h2>
+        </div>
+
+        <div class="splinter splinter-3">
+            <div class="splinter-bg bg-3"></div>
+            <div class="splinter-glass-overlay"></div>
+            <h2 class="splinter-title">АРТЕФАКТЫ</h2>
+        </div>
+    </section>
+
+    <div class="cursor-dot"></div>
+    <div class="cursor-trail"></div>
+
+    <script>
+        const dot = document.querySelector('.cursor-dot');
+        const trail = document.querySelector('.cursor-trail');
+        const interactables = document.querySelectorAll('button, .menu-btn, .cart-btn, .splinter');
+
+        let mouseX = 0; let mouseY = 0;
+        let trailX = 0; let trailY = 0;
+
+        window.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX; mouseY = e.clientY;
+            dot.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
+        });
+
+        function animateCursor() {
+            trailX += (mouseX - trailX) * 0.15;
+            trailY += (mouseY - trailY) * 0.15;
+            trail.style.transform = `translate(${trailX}px, ${trailY}px)`;
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        interactables.forEach(el => {
+            el.addEventListener('mouseenter', () => trail.classList.add('hovered'));
+            el.addEventListener('mouseleave', () => trail.classList.remove('hovered'));
+        });
+
+        // --- ПАРАЛЛАКС ЭФФЕКТ ---
+        window.addEventListener('scroll', () => {
+            document.body.style.setProperty('--scroll', window.scrollY);
+        });
+    </script>
+
+</body>
+</html>
