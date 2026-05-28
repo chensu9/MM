@@ -9,6 +9,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;400;800&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="favicon.png">
     <style>
+        html, body {
+    overflow-x: hidden; /* Запрещает сайту "расползаться" вширь */
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
        :root {
             
             --bg-base: #858585; 
@@ -613,50 +620,62 @@
 
 /* --- НОВАЯ АДАПТАЦИЯ ПОД ТЕЛЕФОН --- */
 @media (max-width: 768px) {
-    /* 1. Шапка: скрываем всё, кроме заголовка */
+    /* 1. Идеально чистая шапка */
+    .glass-header {
+        width: 90% !important;
+        display: flex !important;
+        justify-content: center !important; /* Лого по центру */
+        padding: 15px 0 !important;
+    }
+    /* Скрываем навигацию и кнопки */
     .glass-header .nav-links, 
     .glass-header .cart-btn, 
-    .glass-header .menu-icon {
+    .glass-header .menu-icon,
+    .glass-header a {
         display: none !important;
     }
-    .glass-header {
-        justify-content: center !important;
-        width: 80% !important;
+    .header-title, .logo {
+        display: block !important; /* Оставляем только текст */
     }
 
-    /* 2. Анимация вещей: по очереди (по 5 секунд на каждую, цикл 15с) */
-    /* Сначала скрываем их по умолчанию */
+    /* 2. Вещи: Центрируем их в одну точку и ставим ВЫШЕ кнопок */
     .hero-hoodie-img, .hero-jacket-right, .hero-shirt-left {
+        position: absolute !important;
+        top: 50% !important;  /* Ровно центр экрана */
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important; /* Центровка */
+        width: 60vw !important;
+        z-index: 100 !important; /* Вещи СВЕРХУ всего */
         opacity: 0;
-        animation: fadeCycle 15s infinite;
-        width: 70vw !important;
-        top: 50% !important;
+        animation: fadeCycle 15s infinite !important;
     }
-    
-    /* Каждая картинка стартует с разной задержкой */
-    .hero-hoodie-img { animation-delay: 0s; }
-    .hero-jacket-right { animation-delay: 5s; }
-    .hero-shirt-left { animation-delay: 10s; }
+
+    /* 3. Анимация смены (с задержками) */
+    .hero-hoodie-img { animation-delay: 0s !important; }
+    .hero-jacket-right { animation-delay: 5s !important; }
+    .hero-shirt-left { animation-delay: 10s !important; }
 
     @keyframes fadeCycle {
-        0%, 30% { opacity: 1; transform: scale(1); }
-        33%, 100% { opacity: 0; transform: scale(0.9); }
+        0%, 30% { opacity: 1; }
+        33%, 100% { opacity: 0; }
     }
 
-    /* 3. Осколки: увеличенный текст */
+    /* 4. Осколки (Кнопки категорий) */
     .shards-container {
         display: flex;
         flex-direction: column;
         align-items: center;
         gap: 20px;
-        margin-top: 50px;
+        margin-top: 120px !important; /* Опускаем их ниже центра экрана */
+        z-index: 50 !important; /* Ниже вещей */
+        position: relative;
     }
     .shard {
         width: 85vw !important;
-        height: 160px !important;
+        height: 140px !important;
     }
     .shard h2 {
-        font-size: 2.5rem !important; /* Увеличенный текст */
+        font-size: 2rem !important;
     }
 }
     </style>
