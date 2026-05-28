@@ -618,11 +618,9 @@
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
         }
 
-/* --- НОВАЯ АДАПТАЦИЯ ПОД ТЕЛЕФОН --- */
-/* --- НОВАЯ АДАПТАЦИЯ ПОД ТЕЛЕФОН --- */
-/* --- ФИНАЛЬНАЯ АДАПТАЦИЯ ПОД ТЕЛЕФОН --- */
+/* --- ФИНАЛЬНАЯ АДАПТАЦИЯ ПОД ТЕЛЕФОН (КАРУСЕЛЬ + ОСКОЛКИ) --- */
 @media (max-width: 768px) {
-    /* 1. Идеально чистая шапка */
+    /* 1. Чистая шапка */
     .glass-nav {
         width: 90% !important;
         top: 15px !important;
@@ -630,49 +628,52 @@
         justify-content: center !important;
         padding: 15px 0 !important;
     }
-    
-    .glass-nav .nav-group {
-        display: none !important; /* Прячем меню по бокам */
-    }
-    
-    .logo {
-        display: block !important;
-        margin: 0 !important;
-        font-size: 1.6rem !important;
-    }
+    .glass-nav .nav-group { display: none !important; }
+    .logo { display: block !important; margin: 0 !important; font-size: 1.6rem !important; }
+    .hero-content { display: none !important; }
 
-    /* 2. Жестко прячем блок с кнопкой "Войти в свет" */
-    .hero-content {
-        display: none !important;
-    }
-
-    /* 3. Одежда: центрируем, уменьшаем и поднимаем */
+    /* 2. КАРУСЕЛЬ ВЕЩЕЙ */
     .hero-hoodie-img, .hero-jacket-right, .hero-shirt-left {
         position: absolute !important;
-        top: 38% !important; /* Подняли выше центра, чтобы освободить низ */
+        top: 35% !important; 
         left: 50% !important;
-        transform: translate(-50%, -50%) !important;
         width: 75vw !important; 
         max-width: 320px !important;
         z-index: 100 !important; 
         opacity: 0;
-        animation: fadeCycle 15s infinite !important;
+        /* Плавная анимация слайдера (карусели) */
+        animation: carouselPhone 15s infinite cubic-bezier(0.4, 0, 0.2, 1) !important;
     }
     
-    /* Задержки для поочередной смены вещей */
+    /* Отрицательные задержки заставляют карусель работать сразу при загрузке страницы */
     .hero-hoodie-img { animation-delay: 0s !important; }
-    .hero-jacket-right { animation-delay: 5s !important; }
-    .hero-shirt-left { animation-delay: 10s !important; }
+    .hero-jacket-right { animation-delay: -10s !important; }
+    .hero-shirt-left { animation-delay: -5s !important; }
 
-    @keyframes fadeCycle {
-        0%, 25% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-        33%, 100% { opacity: 0; transform: translate(-50%, -50%) scale(0.9); }
+    /* Логика карусели */
+    @keyframes carouselPhone {
+        0%, 20% { 
+            opacity: 1; 
+            transform: translate(-50%, -50%) scale(1); /* Стоит по центру */
+        }
+        28% { 
+            opacity: 0; 
+            transform: translate(-150%, -50%) scale(0.8); /* Уезжает влево */
+        }
+        29%, 92% { 
+            opacity: 0; 
+            transform: translate(50%, -50%) scale(0.8); /* Телепортируется и ждет справа */
+        }
+        100% { 
+            opacity: 1; 
+            transform: translate(-50%, -50%) scale(1); /* Выезжает из правого края в центр */
+        }
     }
 
-    /* 4. Контейнер кнопок-категорий */
+    /* 3. ВОЗВРАЩАЕМ ОСКОЛКИ */
     .shards-container {
         position: absolute !important;
-        bottom: 4vh !important; /* Прибиваем к самому низу */
+        bottom: 4vh !important;
         left: 50% !important;
         transform: translateX(-50%) !important;
         display: flex !important;
@@ -681,22 +682,28 @@
         gap: 12px !important;
         z-index: 10 !important; 
         width: 90% !important;
-        height: auto !important; 
     }
     
-    /* 5. ИСПРАВЛЕНИЕ ОСКОЛКОВ: убираем кривые края, делаем аккуратные карточки */
-    .shard, .shard-1, .shard-2, .shard-3 {
+    .shard {
         width: 100% !important;
-        height: 75px !important; /* Задаем одинаковую и комфортную высоту */
-        margin: 0 !important; /* Сбрасываем старые кривые отступы */
-        clip-path: none !important; /* ОТКЛЮЧАЕМ КРИВЫЕ УГЛЫ НА ТЕЛЕФОНЕ */
-        border-radius: 12px !important; /* Делаем аккуратное закругление */
+        height: 85px !important; /* Делаем их компактнее */
+        margin: 0 !important;
+        border-radius: 0 !important; /* Убираем круглые края */
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
     }
+
+    /* Специальные формы осколков для телефона (скошенные, но не ломающие сетку) */
+    .shard-1 { clip-path: polygon(2% 0%, 100% 5%, 98% 100%, 0% 95%) !important; }
+    .shard-2 { clip-path: polygon(0% 5%, 98% 0%, 100% 95%, 2% 100%) !important; }
+    .shard-3 { clip-path: polygon(2% 5%, 100% 0%, 98% 95%, 0% 100%) !important; }
     
     .shard h2 {
         font-size: 1.4rem !important; 
-        letter-spacing: 0 !important;
         margin: 0 !important;
+        text-align: center !important;
+        letter-spacing: 1px !important;
     }
 }
     </style>
