@@ -611,51 +611,52 @@
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
         }
 
-/* --- АДАПТАЦИЯ ПОД ТЕЛЕФОН (ОПТИМИЗАЦИЯ) --- */
+/* --- НОВАЯ АДАПТАЦИЯ ПОД ТЕЛЕФОН --- */
 @media (max-width: 768px) {
-    /* 1. Верхняя плашка: только название */
+    /* 1. Шапка: скрываем всё, кроме заголовка */
+    .glass-header .nav-links, 
+    .glass-header .cart-btn, 
+    .glass-header .menu-icon {
+        display: none !important;
+    }
     .glass-header {
-        width: 90% !important;
-        height: 60px !important;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 0 !important;
-    }
-    .glass-header .nav-links, .glass-header .cart-btn {
-        display: none !important; /* Убираем всё, кроме названия */
-    }
-    .footer-logo, .header-title {
-        font-size: 1.5rem !important;
-        margin: 0 !important;
+        justify-content: center !important;
+        width: 80% !important;
     }
 
-    /* 2. Смена вещей на фоне каждые 5 секунд */
+    /* 2. Анимация вещей: по очереди (по 5 секунд на каждую, цикл 15с) */
+    /* Сначала скрываем их по умолчанию */
     .hero-hoodie-img, .hero-jacket-right, .hero-shirt-left {
+        opacity: 0;
+        animation: fadeCycle 15s infinite;
         width: 70vw !important;
-        animation: fadeScale 5s infinite !important;
+        top: 50% !important;
+    }
+    
+    /* Каждая картинка стартует с разной задержкой */
+    .hero-hoodie-img { animation-delay: 0s; }
+    .hero-jacket-right { animation-delay: 5s; }
+    .hero-shirt-left { animation-delay: 10s; }
+
+    @keyframes fadeCycle {
+        0%, 30% { opacity: 1; transform: scale(1); }
+        33%, 100% { opacity: 0; transform: scale(0.9); }
     }
 
-    @keyframes fadeScale {
-        0%, 100% { opacity: 0; transform: scale(0.8); }
-        20%, 80% { opacity: 1; transform: scale(1); }
-    }
-
-    /* 3. Осколки: текст крупнее, вертикальное расположение */
+    /* 3. Осколки: увеличенный текст */
     .shards-container {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 30px;
-        margin-top: 100px;
+        gap: 20px;
+        margin-top: 50px;
     }
     .shard {
         width: 85vw !important;
-        height: 180px !important;
+        height: 160px !important;
     }
     .shard h2 {
-        font-size: 2rem !important; /* Увеличили текст в осколках */
-        line-height: 1.2;
+        font-size: 2.5rem !important; /* Увеличенный текст */
     }
 }
     </style>
