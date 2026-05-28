@@ -619,33 +619,31 @@
         }
 
 /* --- НОВАЯ АДАПТАЦИЯ ПОД ТЕЛЕФОН --- */
+/* --- НОВАЯ АДАПТАЦИЯ ПОД ТЕЛЕФОН --- */
 @media (max-width: 768px) {
     /* 1. Идеально чистая шапка */
-    .glass-header {
+    .glass-nav {
         width: 90% !important;
         display: flex !important;
         justify-content: center !important; /* Лого по центру */
         padding: 15px 0 !important;
     }
-    /* Скрываем навигацию и кнопки */
-    .glass-header .nav-links, 
-    .glass-header .cart-btn, 
-    .glass-header .menu-icon,
-    .glass-header a {
+    /* Скрываем боковые меню (///, Мужское, Артефакты и тд) */
+    .glass-nav .nav-group {
         display: none !important;
     }
-    .header-title, .logo {
-        display: block !important; /* Оставляем только текст */
+    .logo {
+        display: block !important; /* Оставляем только текст MM Store */
     }
 
-    /* 2. Вещи: Центрируем их в одну точку и ставим ВЫШЕ кнопок */
+    /* 2. Вещи: Поднимаем чуть выше центра и ставим ВЫШЕ кнопок */
     .hero-hoodie-img, .hero-jacket-right, .hero-shirt-left {
         position: absolute !important;
-        top: 50% !important;  /* Ровно центр экрана */
+        top: 40% !important;  /* Подняли чуть выше, чтобы не наезжали на текст осколков */
         left: 50% !important;
         transform: translate(-50%, -50%) !important; /* Центровка */
-        width: 60vw !important;
-        z-index: 100 !important; /* Вещи СВЕРХУ всего */
+        width: 80vw !important; /* Сделали крупнее для телефона */
+        z-index: 100 !important; /* СЛОЙ 100: Вещи СВЕРХУ всего */
         opacity: 0;
         animation: fadeCycle 15s infinite !important;
     }
@@ -662,20 +660,27 @@
 
     /* 4. Осколки (Кнопки категорий) */
     .shards-container {
+        position: absolute !important;
+        bottom: 2vh !important; /* Прибиваем их в самый низ экрана */
+        left: 50% !important;
+        transform: translateX(-50%) !important;
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 20px;
-        margin-top: 120px !important; /* Опускаем их ниже центра экрана */
-        z-index: 50 !important; /* Ниже вещей */
-        position: relative;
+        gap: 15px !important;
+        z-index: 10 !important; /* СЛОЙ 10: Точно НИЖЕ вещей */
+        width: 100% !important;
+        height: auto !important; /* Разрешаем блоку подстроиться под высоту 3 осколков */
     }
+    
     .shard {
         width: 85vw !important;
-        height: 140px !important;
+        height: 110px !important; /* Сделали их чуть тоньше, чтобы влезли все три */
+        margin: 0 !important; /* Убираем лишние отступы */
     }
+    
     .shard h2 {
-        font-size: 2rem !important;
+        font-size: 2rem !important; /* Крупный текст */
     }
 }
     </style>
@@ -714,11 +719,6 @@
         <img src="MMCASTLE.png" alt="MM Castle Jacket" class="hero-jacket-right">
         
         <img src="MMHOODIE.png" alt="MM Hoodie" class="hero-hoodie-img">
-
-        <div class="hero-content">
-
-            <button class="glass-btn">Войти в свет</button>
-        </div>
 
        <div class="shards-container">
             <div class="shard shard-1" onclick="document.getElementById('cat-mens').scrollIntoView({ behavior: 'smooth' });">
