@@ -611,24 +611,31 @@
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
         }
 
-        /* Адаптация для мобильных телефонов (чтобы блоки не слипались) */
-        @media (max-width: 768px) {
-            .glass-footer {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            .footer-links {
-                text-align: left;
-            }
-        }
-
         /* --- АДАПТИВНОСТЬ ПОД МОБИЛЬНЫЕ УСТРОЙСТВА --- */
 @media (max-width: 768px) {
-    /* 1. Уменьшаем размер левитирующих объектов на фоне */
-    .hero-hoodie-img, .hero-jacket-right, .hero-shirt-left {
-        width: 60vw !important; /* Делаем их компактнее */
-        top: 40%;
+    /* Компактная шапка */
+    .glass-header {
+        width: 90% !important;
+        padding: 10px 20px !important;
+        top: 20px !important;
     }
+
+    /* Прячем лишние пункты меню в бургер или уменьшаем шрифт */
+    .nav-links {
+        font-size: 0.7rem !important;
+        gap: 10px !important;
+    }
+
+    /* Уменьшаем логотип */
+    .logo {
+        font-size: 1.2rem !important;
+    }
+
+    .hero-hoodie-img, .hero-jacket-right, .hero-shirt-left {
+        width: 40vw !important; /* Еще сильнее уменьшаем объекты */
+        top: 55%; /* Чуть опускаем ниже шапки */
+    }
+
 
     /* 2. Центрируем и слегка уменьшаем текст/кнопки */
     .hero-content {
@@ -657,6 +664,19 @@
     .footer-links {
         text-align: center;
         margin-top: 20px;
+    }
+
+    .shards-container {
+        display: flex;
+        flex-direction: column; /* Ставим осколки друг под друга */
+        align-items: center;
+        gap: 20px;
+        margin-top: 50px;
+    }
+
+    .shard {
+        width: 80vw !important; /* Делаем осколки по ширине экрана */
+        height: 150px !important; /* Уменьшаем высоту для мобильных */
     }
 }
     </style>
