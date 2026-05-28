@@ -620,67 +620,83 @@
 
 /* --- НОВАЯ АДАПТАЦИЯ ПОД ТЕЛЕФОН --- */
 /* --- НОВАЯ АДАПТАЦИЯ ПОД ТЕЛЕФОН --- */
+/* --- ФИНАЛЬНАЯ АДАПТАЦИЯ ПОД ТЕЛЕФОН --- */
 @media (max-width: 768px) {
     /* 1. Идеально чистая шапка */
     .glass-nav {
         width: 90% !important;
+        top: 15px !important;
         display: flex !important;
-        justify-content: center !important; /* Лого по центру */
+        justify-content: center !important;
         padding: 15px 0 !important;
     }
-    /* Скрываем боковые меню (///, Мужское, Артефакты и тд) */
+    
     .glass-nav .nav-group {
-        display: none !important;
+        display: none !important; /* Прячем меню по бокам */
     }
+    
     .logo {
-        display: block !important; /* Оставляем только текст MM Store */
+        display: block !important;
+        margin: 0 !important;
+        font-size: 1.6rem !important;
     }
 
-    /* 2. Вещи: Поднимаем чуть выше центра и ставим ВЫШЕ кнопок */
+    /* 2. Жестко прячем блок с кнопкой "Войти в свет" */
+    .hero-content {
+        display: none !important;
+    }
+
+    /* 3. Одежда: центрируем, уменьшаем и поднимаем */
     .hero-hoodie-img, .hero-jacket-right, .hero-shirt-left {
         position: absolute !important;
-        top: 40% !important;  /* Подняли чуть выше, чтобы не наезжали на текст осколков */
+        top: 38% !important; /* Подняли выше центра, чтобы освободить низ */
         left: 50% !important;
-        transform: translate(-50%, -50%) !important; /* Центровка */
-        width: 80vw !important; /* Сделали крупнее для телефона */
-        z-index: 100 !important; /* СЛОЙ 100: Вещи СВЕРХУ всего */
+        transform: translate(-50%, -50%) !important;
+        width: 75vw !important; 
+        max-width: 320px !important;
+        z-index: 100 !important; 
         opacity: 0;
         animation: fadeCycle 15s infinite !important;
     }
-
-    /* 3. Анимация смены (с задержками) */
+    
+    /* Задержки для поочередной смены вещей */
     .hero-hoodie-img { animation-delay: 0s !important; }
     .hero-jacket-right { animation-delay: 5s !important; }
     .hero-shirt-left { animation-delay: 10s !important; }
 
     @keyframes fadeCycle {
-        0%, 30% { opacity: 1; }
-        33%, 100% { opacity: 0; }
+        0%, 25% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        33%, 100% { opacity: 0; transform: translate(-50%, -50%) scale(0.9); }
     }
 
-    /* 4. Осколки (Кнопки категорий) */
+    /* 4. Контейнер кнопок-категорий */
     .shards-container {
         position: absolute !important;
-        bottom: 2vh !important; /* Прибиваем их в самый низ экрана */
+        bottom: 4vh !important; /* Прибиваем к самому низу */
         left: 50% !important;
         transform: translateX(-50%) !important;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 15px !important;
-        z-index: 10 !important; /* СЛОЙ 10: Точно НИЖЕ вещей */
-        width: 100% !important;
-        height: auto !important; /* Разрешаем блоку подстроиться под высоту 3 осколков */
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 12px !important;
+        z-index: 10 !important; 
+        width: 90% !important;
+        height: auto !important; 
     }
     
-    .shard {
-        width: 85vw !important;
-        height: 110px !important; /* Сделали их чуть тоньше, чтобы влезли все три */
-        margin: 0 !important; /* Убираем лишние отступы */
+    /* 5. ИСПРАВЛЕНИЕ ОСКОЛКОВ: убираем кривые края, делаем аккуратные карточки */
+    .shard, .shard-1, .shard-2, .shard-3 {
+        width: 100% !important;
+        height: 75px !important; /* Задаем одинаковую и комфортную высоту */
+        margin: 0 !important; /* Сбрасываем старые кривые отступы */
+        clip-path: none !important; /* ОТКЛЮЧАЕМ КРИВЫЕ УГЛЫ НА ТЕЛЕФОНЕ */
+        border-radius: 12px !important; /* Делаем аккуратное закругление */
     }
     
     .shard h2 {
-        font-size: 2rem !important; /* Крупный текст */
+        font-size: 1.4rem !important; 
+        letter-spacing: 0 !important;
+        margin: 0 !important;
     }
 }
     </style>
