@@ -621,6 +621,44 @@
                 text-align: left;
             }
         }
+
+        /* --- АДАПТИВНОСТЬ ПОД МОБИЛЬНЫЕ УСТРОЙСТВА --- */
+@media (max-width: 768px) {
+    /* 1. Уменьшаем размер левитирующих объектов на фоне */
+    .hero-hoodie-img, .hero-jacket-right, .hero-shirt-left {
+        width: 60vw !important; /* Делаем их компактнее */
+        top: 40%;
+    }
+
+    /* 2. Центрируем и слегка уменьшаем текст/кнопки */
+    .hero-content {
+        bottom: 15%;
+    }
+
+    .glass-btn {
+        padding: 12px 30px;
+        font-size: 0.9rem;
+    }
+
+    /* 3. Перестраиваем сетку товаров в одну колонку */
+    .product-grid {
+        grid-template-columns: 1fr; /* Одна колонка вместо нескольких */
+        gap: 20px;
+        padding: 0 10px;
+    }
+
+    /* 4. Немного уменьшаем отступы в футере */
+    .glass-footer {
+        flex-direction: column;
+        text-align: center;
+        padding: 30px 20px;
+    }
+
+    .footer-links {
+        text-align: center;
+        margin-top: 20px;
+    }
+}
     </style>
 </head>
 <body>
