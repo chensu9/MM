@@ -6,54 +6,71 @@
     <title>MM Store</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;400;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Unbounded:wght@500;700;800&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="favicon.png">
     <style>
-        html, body {
-    overflow-x: hidden; /* Запрещает сайту "расползаться" вширь */
-    width: 100%;
-    margin: 0;
-    padding: 0;
-}
-
-       :root {
-            
-            --bg-base: #858585; 
-            --text-main: #101010; 
-            --text-muted: #333333; 
-            
-            
-            --glass-bg: rgba(200, 200, 200, 0.25);
-            --glass-border: rgba(255, 255, 255, 0.25);
-            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.15); 
-            --glass-highlight: inset 0 0 20px rgba(255, 255, 255, 0.15);
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 110px;
         }
 
-        * {
+        html, body {
+            overflow-x: hidden; /* Запрещает сайту "расползаться" вширь */
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+       :root {
+
+            --bg-base: #8b8c87;
+            --text-main: #0e100f;
+            --text-muted: #343735;
+            --text-soft: #676b67;
+            --light-ink: #f3f1e8;
+
+
+            --glass-bg: rgba(230, 229, 221, 0.24);
+            --glass-strong: rgba(245, 244, 238, 0.34);
+            --glass-border: rgba(255, 255, 255, 0.34);
+            --glass-shadow: 0 18px 60px rgba(0, 0, 0, 0.18);
+            --glass-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.42), inset 0 -18px 40px rgba(0, 0, 0, 0.06);
+        }
+
+        *,
+        *::before,
+        *::after {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            html {
-            scroll-behavior: smooth; 
-        }
         }
 
         body {
             background-color: var(--bg-base);
             color: var(--text-main);
-            font-family: 'Manrope', sans-serif;
+            font-family: 'Inter', sans-serif;
+            line-height: 1.45;
             overflow-x: hidden;
             min-height: 100vh;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
         }
 
-       
+        ::selection {
+            background: var(--text-main);
+            color: var(--light-ink);
+        }
+
+
         .liquid-bg {
             position: fixed;
             top: 0; left: 0;
             width: 100vw; height: 100vh;
             z-index: -1;
             overflow: hidden;
-            background: #808080; 
+            background:
+                linear-gradient(135deg, rgba(255,255,255,0.12), rgba(0,0,0,0.08)),
+                #858782;
         }
 
         .blob {
@@ -61,18 +78,18 @@
             filter: blur(60px);
             border-radius: 50%;
             animation: floatAndMorph 15s infinite alternate ease-in-out;
-            opacity: 0.8; 
+            opacity: 0.8;
         }
 
         .blob-1 {
             width: 40vw; height: 40vw;
-            background: #5e5e5e; 
+            background: #5f625f;
             top: -10%; left: -10%;
         }
 
         .blob-2 {
             width: 30vw; height: 30vw;
-            background: #b0b0b0; 
+            background: #c7c5bb;
             bottom: 10%; right: -5%;
             animation-delay: -5s;
             animation-duration: 12s;
@@ -80,7 +97,7 @@
 
         .blob-3 {
             width: 25vw; height: 25vw;
-            background: #6e6e6e; 
+            background: #737b77;
             animation-duration: 18s;
             animation-delay: -2s;
         }
@@ -90,20 +107,19 @@
             100% { transform: translate(10%, 15%) scale(1.1); }
         }
 
-        
+
         .glass-nav {
             position: fixed;
-            top: 30px;
+            top: 24px;
             left: 50%;
             transform: translateX(-50%);
-            width: 90%;
-            max-width: 1400px;
+            width: min(calc(100% - 48px), 1320px);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 40px;
-            
-            
+            padding: 12px 28px;
+
+
             background: var(--glass-bg);
             backdrop-filter: blur(24px) saturate(150%);
             -webkit-backdrop-filter: blur(24px) saturate(150%);
@@ -115,66 +131,79 @@
 
         .nav-group {
             display: flex;
-            gap: 30px;
+            gap: 10px;
             align-items: center;
             font-size: 0.85rem;
             font-weight: 800;
-            letter-spacing: 1px;
+            letter-spacing: 0;
             text-transform: uppercase;
         }
 
         .nav-link {
             color: var(--text-muted);
             text-decoration: none;
-            transition: color 0.3s;
+            display: inline-flex;
+            align-items: center;
+            min-height: 38px;
+            padding: 0 12px;
+            border-radius: 999px;
+            transition: color 0.3s, background 0.3s, transform 0.3s;
             cursor: pointer;
         }
 
-        .nav-link:hover {
+        .nav-link:hover,
+        .nav-link:focus-visible {
+            background: rgba(255, 255, 255, 0.22);
             color: var(--text-main);
+            outline: none;
+            transform: translateY(-1px);
         }
 
         .logo {
-            font-size: 1.8rem;
+            font-family: 'Unbounded', sans-serif;
+            font-size: 1.55rem;
             font-weight: 800;
-            letter-spacing: -2px;
+            letter-spacing: 0;
             color: var(--text-main);
+            line-height: 1;
         }
 
-        
+
         .hero-section {
             position: relative;
-            height: 100vh;
+            min-height: 760px;
+            height: 100svh;
             width: 100%;
             display: flex;
             flex-direction: column;
             justify-content: center;
             padding: 0 5%;
+            isolation: isolate;
         }
 
-       
+
         .hero-content {
             position: absolute;
-            bottom: 20%; 
+            bottom: 20%;
             left: 50%;
             transform: translateX(-50%);
-            z-index: 15; 
+            z-index: 15;
             width: 100%;
-            text-align: center; 
-            margin-top: 0; 
+            text-align: center;
+            margin-top: 0;
         }
 
         .hero-title {
-            font-size: 6vw;
+            font-size: 4.75rem;
             line-height: 1;
             font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: -3px;
+            letter-spacing: 0;
             margin-bottom: 40px;
             color: var(--text-main);
         }
 
-        
+
         .glass-btn {
             background: var(--glass-bg);
             color: var(--text-main);
@@ -182,7 +211,7 @@
             padding: 20px 50px;
             font-size: 0.9rem;
             font-weight: 800;
-            letter-spacing: 2px;
+            letter-spacing: 0;
             text-transform: uppercase;
             cursor: pointer;
             backdrop-filter: blur(10px);
@@ -196,59 +225,71 @@
         .glass-btn:hover {
             background: #e0e0e0;
             transform: translateY(-3px);
-            
+
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
         }
 
-        
+
         .shards-container {
             position: absolute;
-            bottom: 5vh;
+            bottom: max(34px, 5vh);
             left: 0;
             width: 100%;
-            height: 40vh;
+            height: 38vh;
             display: flex;
             justify-content: center;
             align-items: flex-end;
-            gap: 20px;
+            gap: 22px;
             padding: 0 5%;
             z-index: 20;
         }
 
         .shard {
             position: relative;
-            
-            background: rgba(180, 180, 180, 0.2); 
+
+            appearance: none;
+            font: inherit;
+            background:
+                linear-gradient(145deg, rgba(255,255,255,0.28), rgba(0,0,0,0.08)),
+                rgba(180, 180, 180, 0.22);
             backdrop-filter: blur(16px) saturate(120%);
             -webkit-backdrop-filter: blur(16px);
-           
-            border: 1px solid rgba(255, 255, 255, 0.2); 
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1), inset 0 0 20px rgba(255,255,255,0.2);
+
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 18px 50px rgba(0,0,0,0.16), inset 0 1px 0 rgba(255,255,255,0.35), inset 0 0 20px rgba(255,255,255,0.18);
             display: flex;
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            transition: transform 0.5s ease, background 0.5s ease;
+            transition: transform 0.5s ease, background 0.5s ease, box-shadow 0.5s ease;
             cursor: pointer;
         }
 
-        .shard:hover {
+        .shard:hover,
+        .shard:focus-visible {
             transform: translateY(-15px) scale(1.02);
-            
-            background: rgba(210, 210, 210, 0.5); 
+
+            background:
+                linear-gradient(145deg, rgba(255,255,255,0.38), rgba(0,0,0,0.06)),
+                rgba(220, 219, 211, 0.5);
+            outline: none;
+            box-shadow: 0 26px 70px rgba(0,0,0,0.24), inset 0 1px 0 rgba(255,255,255,0.5);
             z-index: 30;
         }
 
         .shard h2 {
-            font-size: 1.5vw;
+            font-family: 'Unbounded', sans-serif;
+            font-size: clamp(1.85rem, 2.65vw, 3.15rem);
             font-weight: 800;
             text-align: center;
             color: var(--text-main);
             z-index: 2;
-            letter-spacing: -0.5px;
+            letter-spacing: 0;
+            line-height: 0.95;
+            text-transform: uppercase;
         }
 
-        
+
         .shard-1 {
             width: 25vw; height: 30vh;
             clip-path: polygon(15% 0%, 100% 10%, 85% 100%, 0% 90%);
@@ -257,23 +298,23 @@
         .shard-2 {
             width: 25vw; height: 25vh;
             clip-path: polygon(5% 5%, 95% 0%, 100% 95%, 0% 100%);
-            margin-bottom: -2vh; 
+            margin-bottom: -2vh;
         }
 
         .shard-3 {
-            width: 35vw; height: 35vh;
-            clip-path: polygon(0% 15%, 100% 0%, 90% 100%, 10% 85%);
+            width: 25vw; height: 30vh;
+            clip-path: polygon(0% 15%, 100% 0%, 88% 100%, 8% 88%);
         }
 
-        
+
         .chain-img {
             position: absolute;
             top: 50%; left: 50%;
             transform: translate(-50%, -50%) scale(1.2);
             width: 150%;
-            opacity: 0.15; 
+            opacity: 0.15;
             transition: all 0.5s ease;
-            filter: contrast(120%); 
+            filter: contrast(120%);
             z-index: 1;
         }
 
@@ -282,71 +323,71 @@
             opacity: 0.4;
         }
 
-        
+
         .hero-hoodie-img {
             position: absolute;
             top: 50%;
             left: 50%;
-            
+
             transform: translate(-50%, -50%);
-            width: 90%;
-            max-width: 700px; 
-            z-index: 5; 
-            
-            
+            width: min(54vw, 700px);
+            max-width: 700px;
+            z-index: 5;
+
+
             filter: drop-shadow(0 30px 40px rgba(0, 0, 0, 0.15));
-            
-            
+
+
             animation: levitate 6s ease-in-out infinite;
             pointer-events: none;
         }
 
-        
+
         @keyframes levitate {
             0% { transform: translate(-50%, -48%); }
             50% { transform: translate(-50%, -52%); }
             100% { transform: translate(-50%, -48%); }
         }
 
-        
+
         .hero-jacket-right {
             position: absolute;
             top: 50%;
-            right: 8%; 
-            width: 25vw; 
+            right: 7%;
+            width: min(25vw, 390px);
             max-width: 400px;
-            
-            
-            z-index: 3; 
-            
+
+
+            z-index: 3;
+
             filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.4));
-            
-            
+
+
             animation: levitateSide 8s ease-in-out infinite alternate;
             pointer-events: none;
         }
 
-        
+
         @keyframes levitateSide {
             0% { transform: translateY(-46%); }
             100% { transform: translateY(-54%); }
         }
 
-        
+
         .particles-container {
             position: fixed;
             top: 0; left: 0;
             width: 100vw; height: 100vh;
-            pointer-events: none; 
-            z-index: 0; 
+            pointer-events: none;
+            z-index: 0;
             overflow: hidden;
         }
 
         .particle {
             position: absolute;
-           
+
             background: rgba(20, 20, 20, 0.8);
-            
+
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.9);
             animation: floatUp linear infinite;
             opacity: 0;
@@ -359,19 +400,19 @@
             100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
         }
 
-        
+
         .hero-shirt-left {
             position: absolute;
             top: 50%;
-            left: 8%; 
-            width: 25vw; 
+            left: 7%;
+            width: min(25vw, 390px);
             max-width: 400px;
-            
+
             z-index: 3; /* Тот же слой, что и у правой куртки (позади центрального худи) */
-            
+
             /* Глубокая черная тень для объема */
             filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.4));
-            
+
             /* Уникальная 7-секундная анимация для рассинхрона с остальными вещами */
             animation: levitateLeft 7s ease-in-out infinite alternate;
             pointer-events: none;
@@ -385,13 +426,18 @@
 
         .product-img-container {
             width: 100%;
-            height: 250px; /* Фиксированная высота для всех карточек */
+            aspect-ratio: 4 / 5;
+            min-height: 270px;
+            height: auto; /* Стабильная высота для всех карточек */
             margin-bottom: 15px;
-            border-radius: 2px;
+            border-radius: 6px;
             overflow: hidden;
             display: flex;
             align-items: center; /* Центрируем по вертикали */
             justify-content: center; /* Центрируем по горизонтали */
+            background:
+                linear-gradient(160deg, rgba(255,255,255,0.18), rgba(0,0,0,0.08)),
+                rgba(18, 20, 19, 0.05);
         }
 
         /* --- МОРФИНГ ФОНОВЫХ ПЯТЕН --- */
@@ -404,19 +450,19 @@
         .blob-3 { animation-delay: -2s; animation-duration: 18s; }
 
         @keyframes floatAndMorph {
-            0% { 
-                transform: translate(0, 0) scale(1) rotate(0deg); 
-                border-radius: 50%; 
+            0% {
+                transform: translate(0, 0) scale(1) rotate(0deg);
+                border-radius: 50%;
             }
-            33% { 
-                border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; 
+            33% {
+                border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
             }
             66% {
                 border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
             }
-            100% { 
-                transform: translate(15%, 20%) scale(1.15) rotate(15deg); 
-                border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; 
+            100% {
+                transform: translate(15%, 20%) scale(1.15) rotate(15deg);
+                border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
             }
         }
 
@@ -427,19 +473,19 @@
             left: 50%;
             transform: translate(-50%, -50%);
             /* Размер светового пятна */
-            width: 45vw; 
-            height: 45vw;
+            width: min(46vw, 610px);
+            height: min(46vw, 610px);
             max-width: 600px;
             max-height: 600px;
-            
+
             /* Градиент свечения: от белого в центре к прозрачному по краям */
             background: radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 65%);
             filter: blur(40px); /* Сильное размытие для мягкости */
             border-radius: 50%;
-            
+
             z-index: 4; /* Очень важно: z-index 4, чтобы свечение было ПОД кофтой (у нее 5) */
             pointer-events: none;
-            
+
             /* Анимация пульсации света в такт дыханию/левитации */
             animation: glowPulse 6s ease-in-out infinite;
         }
@@ -455,7 +501,7 @@
         .catalog-container {
             position: relative;
             width: 100%;
-            max-width: 1200px;
+            max-width: 1240px;
             margin: 15vh auto 10vh; /* Отступ от главного экрана */
             padding: 0 5%;
             z-index: 10;
@@ -479,15 +525,16 @@
         .category-divider .line {
             flex-grow: 1;
             height: 1px;
-            background: rgba(0, 0, 0, 0.3); /* Темная линия на сером фоне */
-            box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2); /* Легкий блик снизу */
+            background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.34), transparent); /* Темная линия на сером фоне */
+            box-shadow: 0 1px 0 rgba(255, 255, 255, 0.24); /* Легкий блик снизу */
         }
 
         .category-divider h3 {
+            font-family: 'Unbounded', sans-serif;
             font-size: 1.2rem;
             font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 0;
             color: var(--text-main);
             white-space: nowrap;
         }
@@ -495,35 +542,47 @@
         /* Сетка товаров */
         .product-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             gap: 30px;
         }
 
         /* Карточка товара (Стекло) */
         .product-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            background:
+                linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.06)),
+                var(--glass-bg);
+            backdrop-filter: blur(14px) saturate(130%);
+            -webkit-backdrop-filter: blur(14px) saturate(130%);
             border: 1px solid var(--glass-border);
-            border-radius: 4px;
+            border-radius: 8px;
             padding: 15px;
-            box-shadow: var(--glass-shadow);
-            transition: transform 0.3s ease, background 0.3s ease;
+            box-shadow: 0 14px 40px rgba(0, 0, 0, 0.13), var(--glass-highlight);
+            transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
         }
 
-        .product-card:hover {
+        .product-card:hover,
+        .product-card:focus-visible {
             transform: translateY(-5px);
-            background: rgba(220, 220, 220, 0.3);
+            background:
+                linear-gradient(180deg, rgba(255,255,255,0.25), rgba(255,255,255,0.08)),
+                rgba(220, 219, 211, 0.32);
+            box-shadow: 0 22px 54px rgba(0, 0, 0, 0.2), var(--glass-highlight);
+            outline: none;
         }
 
         /* Заглушка под фото */
         .product-img {
             width: 100%;
-            height: 350px;
-            background: rgba(0, 0, 0, 0.1);
+            aspect-ratio: 4 / 5;
+            height: auto;
+            min-height: 270px;
+            background:
+                linear-gradient(160deg, rgba(255,255,255,0.16), rgba(0,0,0,0.1)),
+                rgba(0, 0, 0, 0.08);
             border: 1px solid rgba(0, 0, 0, 0.05);
             margin-bottom: 15px;
+            border-radius: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -531,7 +590,7 @@
             font-weight: 800;
             text-transform: uppercase;
             font-size: 0.9rem;
-            letter-spacing: 1px;
+            letter-spacing: 0;
         }
 
         /* Название товара */
@@ -542,11 +601,16 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 12px;
+            line-height: 1.25;
+            flex-wrap: wrap;
         }
 
         .product-price {
             color: var(--text-muted);
             font-size: 0.9rem;
+            margin-left: auto;
+            white-space: nowrap;
         }
 
        .catalog-real-img {
@@ -554,8 +618,223 @@
             max-height: 100%;
             object-fit: contain; /* Картинка всегда помещается целиком */
             transition: transform 0.5s ease, filter 0.5s ease;
-            filter: grayscale(80%) contrast(120%);
-        } 
+            filter: grayscale(65%) contrast(118%) drop-shadow(0 20px 28px rgba(0,0,0,0.18));
+        }
+
+        .product-card:hover .catalog-real-img {
+            transform: scale(1.045);
+            filter: grayscale(20%) contrast(112%) drop-shadow(0 24px 32px rgba(0,0,0,0.22));
+        }
+
+        #cat-arts .product-grid {
+            grid-template-columns: minmax(280px, 520px);
+            justify-content: center;
+        }
+
+        #cat-arts .product-img-container {
+            aspect-ratio: 16 / 10;
+            min-height: 0;
+        }
+
+        #cat-arts .catalog-real-img {
+            width: 94%;
+            max-width: 94%;
+            max-height: 88%;
+        }
+
+        #cat-arts .product-card:hover .catalog-real-img,
+        #cat-arts .product-card:focus-visible .catalog-real-img {
+            transform: scale(1.08);
+        }
+
+        body.modal-open {
+            overflow: hidden;
+        }
+
+        .product-modal[hidden] {
+            display: none;
+        }
+
+        .product-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 300;
+            display: grid;
+            place-items: center;
+            padding: 24px;
+        }
+
+        .modal-backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(12, 13, 12, 0.45);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+        }
+
+        .modal-panel {
+            position: relative;
+            width: min(480px, 100%);
+            max-height: calc(100svh - 48px);
+            overflow: auto;
+            padding: 28px;
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            background:
+                linear-gradient(145deg, rgba(245, 244, 238, 0.55), rgba(160, 162, 156, 0.34)),
+                var(--glass-bg);
+            box-shadow: 0 28px 90px rgba(0, 0, 0, 0.35), var(--glass-highlight);
+            color: var(--text-main);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.18);
+            color: var(--text-main);
+            font-size: 1.5rem;
+            line-height: 1;
+            cursor: pointer;
+            transition: background 0.25s ease, transform 0.25s ease;
+        }
+
+        .modal-close:hover,
+        .modal-close:focus-visible {
+            background: rgba(255, 255, 255, 0.35);
+            outline: none;
+            transform: rotate(90deg);
+        }
+
+        .modal-label {
+            margin-bottom: 12px;
+            color: var(--text-soft);
+            font-size: 0.78rem;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .modal-title {
+            max-width: calc(100% - 42px);
+            font-family: 'Unbounded', sans-serif;
+            font-size: 1.45rem;
+            line-height: 1.08;
+            margin-bottom: 10px;
+        }
+
+        .modal-price {
+            color: var(--text-muted);
+            font-size: 1rem;
+            font-weight: 800;
+            margin-bottom: 18px;
+        }
+
+        .modal-media {
+            width: 100%;
+            height: 220px;
+            margin-bottom: 22px;
+            border: 1px solid rgba(15, 16, 15, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background:
+                linear-gradient(160deg, rgba(255,255,255,0.22), rgba(0,0,0,0.08)),
+                rgba(18, 20, 19, 0.05);
+        }
+
+        .modal-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transform: scale(1.16);
+            filter: grayscale(40%) contrast(112%) drop-shadow(0 18px 26px rgba(0,0,0,0.2));
+            transition: transform 0.45s ease, filter 0.45s ease;
+        }
+
+        .modal-media:hover .modal-image,
+        .modal-media:focus-within .modal-image {
+            transform: scale(1.32);
+            filter: grayscale(10%) contrast(108%) drop-shadow(0 24px 32px rgba(0,0,0,0.24));
+        }
+
+        .modal-image[hidden],
+        .modal-image-placeholder[hidden] {
+            display: none;
+        }
+
+        .modal-image-placeholder {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .size-title {
+            display: block;
+            margin-bottom: 12px;
+            font-size: 0.9rem;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .size-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(74px, 1fr));
+            gap: 10px;
+            margin-bottom: 22px;
+        }
+
+        .size-option {
+            min-height: 48px;
+            border: 1px solid rgba(15, 16, 15, 0.18);
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            color: var(--text-main);
+            font: inherit;
+            font-weight: 800;
+            cursor: pointer;
+            transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease;
+        }
+
+        .size-option:hover,
+        .size-option:focus-visible,
+        .size-option.is-selected {
+            background: var(--text-main);
+            color: var(--light-ink);
+            outline: none;
+            transform: translateY(-2px);
+        }
+
+        .modal-buy {
+            width: 100%;
+            min-height: 54px;
+            border: 0;
+            border-radius: 6px;
+            background: var(--text-main);
+            color: var(--light-ink);
+            font: inherit;
+            font-weight: 800;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: opacity 0.25s ease, transform 0.25s ease;
+        }
+
+        .modal-buy:disabled {
+            cursor: not-allowed;
+            opacity: 0.48;
+        }
+
+        .modal-buy:not(:disabled):hover,
+        .modal-buy:not(:disabled):focus-visible {
+            outline: none;
+            transform: translateY(-2px);
+        }
 
         /* --- FOOTER / ПОДВАЛ --- */
         .glass-footer {
@@ -566,7 +845,7 @@
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             border-top: 1px solid var(--glass-border);
-            
+
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -581,10 +860,11 @@
         }
 
         .footer-logo {
-            font-size: 1.8rem;
+            font-family: 'Unbounded', sans-serif;
+            font-size: 1.55rem;
             font-weight: 800;
             color: var(--text-main);
-            letter-spacing: -2px;
+            letter-spacing: 0;
             margin-bottom: 15px;
             display: block;
         }
@@ -608,125 +888,320 @@
             font-size: 0.95rem;
             font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: color 0.3s ease, transform 0.3s ease;
+            letter-spacing: 0;
+            transition: color 0.3s ease, transform 0.3s ease, background 0.3s ease;
+            padding: 10px 0;
         }
 
-        .footer-link:hover {
+        .footer-link:hover,
+        .footer-link:focus-visible {
             color: #ffffff; /* При наведении текст становится светлее */
             transform: translateX(-5px); /* Легкий сдвиг влево при наведении */
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+            outline: none;
         }
 
-/* --- ФИНАЛЬНАЯ АДАПТАЦИЯ ПОД ТЕЛЕФОН (КАРУСЕЛЬ + ОСКОЛКИ) --- */
-@media (max-width: 768px) {
-    /* 1. Чистая шапка */
-    .glass-nav {
-        width: 90% !important;
-        top: 15px !important;
-        display: flex !important;
-        justify-content: center !important;
-        padding: 15px 0 !important;
-    }
-    .glass-nav .nav-group { display: none !important; }
-    .logo { display: block !important; margin: 0 !important; font-size: 1.6rem !important; }
-    .hero-content { display: none !important; }
+        @media (max-width: 920px) {
+            .glass-nav {
+                width: min(calc(100% - 28px), 760px);
+                padding: 12px 18px;
+            }
 
-    /* 2. КАРУСЕЛЬ ВЕЩЕЙ */
-    .hero-hoodie-img, .hero-jacket-right, .hero-shirt-left {
-        position: absolute !important;
-        top: 35% !important; 
-        left: 50% !important;
-        width: 75vw !important; 
-        max-width: 320px !important;
-        z-index: 100 !important; 
-        opacity: 0;
-        /* Плавная анимация слайдера (карусели) */
-        animation: carouselPhone 15s infinite cubic-bezier(0.4, 0, 0.2, 1) !important;
-    }
-    
-    /* Отрицательные задержки заставляют карусель работать сразу при загрузке страницы */
-    .hero-hoodie-img { animation-delay: 0s !important; }
-    .hero-jacket-right { animation-delay: -10s !important; }
-    .hero-shirt-left { animation-delay: -5s !important; }
+            .nav-group {
+                gap: 4px;
+                font-size: 0.78rem;
+            }
 
-    /* Логика карусели */
-    @keyframes carouselPhone {
-        0%, 20% { 
-            opacity: 1; 
-            transform: translate(-50%, -50%) scale(1); /* Стоит по центру */
+            .nav-link {
+                padding: 0 8px;
+            }
+
+            .hero-hoodie-img {
+                width: min(68vw, 560px);
+            }
+
+            .hero-jacket-right,
+            .hero-shirt-left {
+                width: min(29vw, 310px);
+            }
         }
-        28% { 
-            opacity: 0; 
-            transform: translate(-150%, -50%) scale(0.8); /* Уезжает влево */
+
+        /* --- ФИНАЛЬНАЯ АДАПТАЦИЯ ПОД ТЕЛЕФОН (КАРУСЕЛЬ + ОСКОЛКИ) --- */
+        @media (max-width: 768px) {
+            html {
+                scroll-padding-top: 82px;
+            }
+
+            .glass-nav {
+                width: calc(100% - 28px) !important;
+                top: 14px !important;
+                display: flex !important;
+                justify-content: center !important;
+                padding: 13px 0 !important;
+            }
+
+            .glass-nav .nav-group {
+                display: none !important;
+            }
+
+            .logo {
+                display: block !important;
+                margin: 0 !important;
+                font-size: 1.22rem !important;
+            }
+
+            .hero-section {
+                min-height: 720px;
+                height: 100svh;
+                padding: 88px 16px 24px;
+            }
+
+            .hero-content {
+                display: none !important;
+            }
+
+            .hoodie-glow {
+                top: 35%;
+                width: min(86vw, 420px);
+                height: min(86vw, 420px);
+                filter: blur(34px);
+            }
+
+            .blob {
+                filter: blur(44px);
+                opacity: 0.6;
+            }
+
+            .blob-1 {
+                width: 70vw;
+                height: 70vw;
+            }
+
+            .blob-2 {
+                width: 62vw;
+                height: 62vw;
+            }
+
+            .blob-3 {
+                width: 52vw;
+                height: 52vw;
+            }
+
+            /* КАРУСЕЛЬ ВЕЩЕЙ */
+            .hero-hoodie-img,
+            .hero-jacket-right,
+            .hero-shirt-left {
+                position: absolute !important;
+                top: 35% !important;
+                left: 50% !important;
+                right: auto !important;
+                width: min(78vw, 330px) !important;
+                max-width: 330px !important;
+                z-index: 12 !important;
+                opacity: 0;
+                animation: carouselPhone 15s infinite cubic-bezier(0.4, 0, 0.2, 1) !important;
+            }
+
+            .hero-hoodie-img { animation-delay: 0s !important; }
+            .hero-jacket-right { animation-delay: -10s !important; }
+            .hero-shirt-left { animation-delay: -5s !important; }
+
+            @keyframes carouselPhone {
+                0%, 20% {
+                    opacity: 1;
+                    transform: translate(-50%, -50%) scale(1);
+                }
+                28% {
+                    opacity: 0;
+                    transform: translate(-150%, -50%) scale(0.86);
+                }
+                29%, 92% {
+                    opacity: 0;
+                    transform: translate(50%, -50%) scale(0.86);
+                }
+                100% {
+                    opacity: 1;
+                    transform: translate(-50%, -50%) scale(1);
+                }
+            }
+
+            /* ОСКОЛКИ */
+            .shards-container {
+                position: absolute !important;
+                bottom: 24px !important;
+                left: 50% !important;
+                transform: translateX(-50%) !important;
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                gap: 10px !important;
+                z-index: 20 !important;
+                width: min(92%, 420px) !important;
+                height: auto !important;
+                padding: 0 !important;
+            }
+
+            .shard {
+                width: 100% !important;
+                height: 82px !important;
+                margin: 0 !important;
+                border-radius: 0 !important;
+                display: flex !important;
+                justify-content: center !important;
+                align-items: center !important;
+            }
+
+            .shard:hover,
+            .shard:focus-visible {
+                transform: translateY(-4px) scale(1.01);
+            }
+
+            .shard-1 { clip-path: polygon(2% 0%, 100% 5%, 98% 100%, 0% 95%) !important; }
+            .shard-2 { clip-path: polygon(0% 5%, 98% 0%, 100% 95%, 2% 100%) !important; }
+            .shard-3 { clip-path: polygon(2% 5%, 100% 0%, 98% 95%, 0% 100%) !important; }
+
+            .shard h2 {
+                font-size: 1.05rem !important;
+                margin: 0 !important;
+                text-align: center !important;
+                letter-spacing: 0 !important;
+            }
+
+            .catalog-container {
+                margin: 64px auto 58px;
+                padding: 0 18px;
+            }
+
+            .catalog-category {
+                margin-bottom: 54px;
+                padding-top: 34px;
+            }
+
+            .category-divider {
+                gap: 12px;
+                margin-bottom: 24px;
+            }
+
+            .category-divider h3 {
+                font-size: 0.92rem;
+                white-space: normal;
+                text-align: center;
+            }
+
+            .product-grid {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+
+            .product-card {
+                padding: 12px;
+            }
+
+            .product-img,
+            .product-img-container {
+                aspect-ratio: 1 / 1;
+                min-height: 220px;
+            }
+
+            #cat-arts .product-grid {
+                grid-template-columns: 1fr;
+            }
+
+            #cat-arts .product-img-container {
+                aspect-ratio: 16 / 10;
+                min-height: 0;
+            }
+
+            .product-title {
+                font-size: 0.95rem;
+            }
+
+            .product-modal {
+                padding: 16px;
+            }
+
+            .modal-panel {
+                padding: 24px 18px 18px;
+            }
+
+            .modal-media {
+                height: 180px;
+                margin-bottom: 18px;
+            }
+
+            .modal-title {
+                font-size: 1.18rem;
+            }
+
+            .size-options {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            /* Выравнивание футера на телефоне */
+            .glass-footer {
+                flex-direction: column !important;
+                text-align: center !important;
+                padding: 40px 18px !important;
+            }
+
+            .footer-brand {
+                margin-bottom: 6px !important;
+            }
+
+            .footer-links {
+                flex-direction: column !important;
+                width: 100% !important;
+                gap: 10px !important;
+                text-align: center !important;
+            }
+
+            .footer-link {
+                width: 100% !important;
+                padding: 12px 0;
+            }
         }
-        29%, 92% { 
-            opacity: 0; 
-            transform: translate(50%, -50%) scale(0.8); /* Телепортируется и ждет справа */
+
+        @media (max-width: 420px) {
+            .hero-section {
+                min-height: 680px;
+            }
+
+            .hero-hoodie-img,
+            .hero-jacket-right,
+            .hero-shirt-left {
+                width: min(82vw, 300px) !important;
+                top: 34% !important;
+            }
+
+            .shard {
+                height: 76px !important;
+            }
+
+            .shard h2 {
+                font-size: 0.96rem !important;
+            }
+
+            .product-title {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 6px;
+            }
+
+            .product-price {
+                margin-left: 0;
+            }
         }
-        100% { 
-            opacity: 1; 
-            transform: translate(-50%, -50%) scale(1); /* Выезжает из правого края в центр */
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                scroll-behavior: auto !important;
+                transition-duration: 0.01ms !important;
+            }
         }
-    }
-
-    /* 3. ВОЗВРАЩАЕМ ОСКОЛКИ */
-    .shards-container {
-        position: absolute !important;
-        bottom: 4vh !important;
-        left: 50% !important;
-        transform: translateX(-50%) !important;
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
-        gap: 12px !important;
-        z-index: 10 !important; 
-        width: 90% !important;
-    }
-    
-    .shard {
-        width: 100% !important;
-        height: 85px !important; /* Делаем их компактнее */
-        margin: 0 !important;
-        border-radius: 0 !important; /* Убираем круглые края */
-        display: flex !important;
-        justify-content: center !important;
-        align-items: center !important;
-    }
-
-    /* Специальные формы осколков для телефона (скошенные, но не ломающие сетку) */
-    .shard-1 { clip-path: polygon(2% 0%, 100% 5%, 98% 100%, 0% 95%) !important; }
-    .shard-2 { clip-path: polygon(0% 5%, 98% 0%, 100% 95%, 2% 100%) !important; }
-    .shard-3 { clip-path: polygon(2% 5%, 100% 0%, 98% 95%, 0% 100%) !important; }
-    
-    .shard h2 {
-        font-size: 1.4rem !important; 
-        margin: 0 !important;
-        text-align: center !important;
-        letter-spacing: 1px !important;
-    }
-}
-
-/* Выравнивание футера на телефоне */
-    .glass-footer {
-        flex-direction: column !important; /* Ставим текст и кнопки друг под друга */
-        text-align: center !important;
-        padding: 40px 5% !important;
-    }
-    
-    .footer-brand {
-        margin-bottom: 30px !important;
-    }
-
-    .footer-links {
-        flex-direction: column !important; /* Кнопки друг под другом */
-        width: 100% !important;
-        gap: 15px !important;
-    }
-
-    .footer-link {
-        width: 100% !important; /* Кнопки растягиваются на всю ширину для удобного нажатия пальцем */
-    }
     </style>
 </head>
 <body>
@@ -743,73 +1218,73 @@
     <header class="glass-nav">
         <div class="nav-group">
             <span class="nav-link">///</span>
-            <span class="nav-link">Мужское</span>
-            <span class="nav-link">Женское</span>
+            <a class="nav-link" href="#cat-mens">Мужское</a>
+            <a class="nav-link" href="#cat-womens">Женское</a>
         </div>
         <div class="logo">MM Store</div>
         <div class="nav-group">
-            <span class="nav-link">Артефакты</span>
+            <a class="nav-link" href="#cat-arts">Артефакты</a>
             <span class="nav-link" style="font-size: 1.2rem;">◬</span>
         </div>
     </header>
 
     <!-- Главный экран -->
     <section class="hero-section">
-        
+
         <div class="hoodie-glow"></div>
 
         <img src="MMSHIRT.png" alt="MM Skull Shirt" class="hero-shirt-left">
 
         <img src="MMCASTLE.png" alt="MM Castle Jacket" class="hero-jacket-right">
-        
+
         <img src="MMHOODIE.png" alt="MM Hoodie" class="hero-hoodie-img">
 
        <div class="shards-container">
-            <div class="shard shard-1" onclick="document.getElementById('cat-mens').scrollIntoView({ behavior: 'smooth' });">
+            <button class="shard shard-1" type="button" data-target="cat-mens">
                 <h2>Мужская<br>Форма</h2>
-            </div>
-            
-            <div class="shard shard-2" onclick="document.getElementById('cat-womens').scrollIntoView({ behavior: 'smooth' });">
+            </button>
+
+            <button class="shard shard-2" type="button" data-target="cat-womens">
                 <h2>Женская<br>Форма</h2>
-            </div>
-            
-            <div class="shard shard-3" onclick="document.getElementById('cat-arts').scrollIntoView({ behavior: 'smooth' });">
-                <h2>Артефакты</h2>
-            </div>
+            </button>
+
+            <button class="shard shard-3" type="button" data-target="cat-arts">
+                <h2>Арте<br>факты</h2>
+            </button>
         </div>
     </section>
     <div class="catalog-container">
-        
+
         <section id="cat-mens" class="catalog-category">
             <div class="category-divider">
                 <span class="line"></span>
                 <h3>Мужская одежда</h3>
                 <span class="line"></span>
             </div>
-            
+
             <div class="product-grid">
-                <div class="product-card">
+                <div class="product-card" role="button" tabindex="0" data-product-name='Худи "Core"' data-product-price="12 500 ₽" data-product-category="Мужская одежда" data-product-sizes="S,M,L,XL">
                     <div class="product-img-container">
                         <img src="MMHOODIE.png" alt="Худи MM" class="catalog-real-img">
                     </div>
                     <div class="product-title">Худи "Core" <span class="product-price">12 500 ₽</span></div>
                 </div>
 
-                <div class="product-card">
+                <div class="product-card" role="button" tabindex="0" data-product-name='Пуховик "Fortress"' data-product-price="28 900 ₽" data-product-category="Мужская одежда" data-product-sizes="S,M,L,XL">
                     <div class="product-img-container">
                         <img src="MMCASTLE.png" alt="Куртка Fortress" class="catalog-real-img">
                     </div>
                     <div class="product-title">Пуховик "Fortress" <span class="product-price">28 900 ₽</span></div>
                 </div>
 
-                <div class="product-card">
+                <div class="product-card" role="button" tabindex="0" data-product-name='Бомбер "MM-MM"' data-product-price="22 000 ₽" data-product-category="Мужская одежда" data-product-sizes="S,M,L,XL">
                     <div class="product-img-container">
                         <img src="MM-MM.png" alt="Куртка MM-MM" class="catalog-real-img">
                     </div>
                     <div class="product-title">Бомбер "MM-MM" <span class="product-price">22 000 ₽</span></div>
                 </div>
 
-                <div class="product-card">
+                <div class="product-card" role="button" tabindex="0" data-product-name='Футболка "Pixel Skull"' data-product-price="7 000 ₽" data-product-category="Мужская одежда" data-product-sizes="XS,S,M,L,XL">
                     <div class="product-img-container">
                         <img src="MMSHIRT.png" alt="Футболка Pixel Skull" class="catalog-real-img">
                     </div>
@@ -824,13 +1299,13 @@
                 <h3>Женская одежда</h3>
                 <span class="line"></span>
             </div>
-            
+
             <div class="product-grid">
-                <div class="product-card">
+                <div class="product-card" role="button" tabindex="0" data-product-name="Название" data-product-price="14 200 ₽" data-product-category="Женская одежда" data-product-sizes="XS,S,M,L">
                     <div class="product-img">Предмет фото</div>
                     <div class="product-title">Название <span class="product-price">14 200 ₽</span></div>
                 </div>
-                <div class="product-card">
+                <div class="product-card" role="button" tabindex="0" data-product-name="Название" data-product-price="7 500 ₽" data-product-category="Женская одежда" data-product-sizes="XS,S,M,L">
                     <div class="product-img">Предмет фото</div>
                     <div class="product-title">Название <span class="product-price">7 500 ₽</span></div>
                 </div>
@@ -843,9 +1318,9 @@
                 <h3>Артефакты</h3>
                 <span class="line"></span>
             </div>
-            
+
             <div class="product-grid">
-                <div class="product-card">
+                <div class="product-card" role="button" tabindex="0" data-product-name='Цепь "Шипы"' data-product-price="5 000 ₽" data-product-category="Артефакты" data-product-sizes="ONE SIZE">
                     <div class="product-img-container">
                         <img src="MMCHAIN.png" alt="Цепь Шипы" class="catalog-real-img">
                     </div>
@@ -855,6 +1330,24 @@
         </section>
 
     </div>
+    <div class="product-modal" id="productModal" hidden aria-hidden="true">
+        <div class="modal-backdrop" data-modal-close></div>
+        <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modalProductName">
+            <button class="modal-close" type="button" data-modal-close aria-label="Закрыть">×</button>
+            <p class="modal-label">Оформление заказа</p>
+            <h3 class="modal-title" id="modalProductName"></h3>
+            <p class="modal-price" id="modalProductPrice"></p>
+            <div class="modal-media">
+                <img class="modal-image" id="modalProductImage" src="" alt="" hidden>
+                <span class="modal-image-placeholder" id="modalImagePlaceholder" hidden>Предмет фото</span>
+            </div>
+            <div class="modal-size-block">
+                <span class="size-title">Выберите размер</span>
+                <div class="size-options" id="sizeOptions"></div>
+            </div>
+            <button class="modal-buy" type="button" id="buyButton" disabled>Купить</button>
+        </div>
+    </div>
     <footer class="glass-footer">
         <div class="footer-brand">
             <span class="footer-logo">MM Store</span>
@@ -862,55 +1355,178 @@
                 MM Store — это не просто одежда, а архитектура формы и материи. Мы создаем бескомпромиссные силуэты на стыке агрессивного брутализма и текучей эстетики для тех, кто ищет скрытый смысл.
             </p>
         </div>
-        
+
         <div class="footer-links">
-            <a href="https://t.me/OVGIER0R1" target="_blank" class="footer-link">Покупка</a>
-            <a href="https://t.me/OVGIER0R1" target="_blank" class="footer-link">Сотрудничество</a>
-            <a href="https://t.me/OVGIER0R1" target="_blank" class="footer-link">Реклама</a>
+            <a href="https://t.me/OVGIER0R1" target="_blank" rel="noopener" class="footer-link">Покупка</a>
+            <a href="https://t.me/OVGIER0R1" target="_blank" rel="noopener" class="footer-link">Сотрудничество</a>
+            <a href="https://t.me/OVGIER0R1" target="_blank" rel="noopener" class="footer-link">Реклама</a>
         </div>
     </footer>
     <script>
-// --- 1. ГЕНЕРАТОР СЕРЕБРЯНОЙ ПЫЛИ ---
-        const particlesContainer = document.querySelector('.particles-container');
-        const particleCount = 40; // Количество пылинок
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-        for (let i = 0; i < particleCount; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            
-            // Случайный размер, позиция и скорость для каждой пылинки
-            const size = Math.random() * 4 + 1; // от 1px до 5px
-            particle.style.width = `${size}px`;
-            particle.style.height = `${size}px`;
-            particle.style.left = `${Math.random() * 100}vw`;
-            
-            // Случайная продолжительность и задержка анимации
-            particle.style.animationDuration = `${Math.random() * 15 + 10}s`; // от 10s до 25s
-            particle.style.animationDelay = `${Math.random() * 10}s`;
-            
-            particlesContainer.appendChild(particle);
+        // --- 1. ГЕНЕРАТОР СЕРЕБРЯНОЙ ПЫЛИ ---
+        const particlesContainer = document.querySelector('.particles-container');
+        const particleCount = prefersReducedMotion ? 0 : (window.innerWidth < 768 ? 18 : 40); // Количество пылинок
+
+        if (particlesContainer) {
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+
+                // Случайный размер, позиция и скорость для каждой пылинки
+                const size = Math.random() * 4 + 1; // от 1px до 5px
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${Math.random() * 100}vw`;
+
+                // Случайная продолжительность и задержка анимации
+                particle.style.animationDuration = `${Math.random() * 15 + 10}s`; // от 10s до 25s
+                particle.style.animationDelay = `${Math.random() * 10}s`;
+
+                particlesContainer.appendChild(particle);
+            }
         }
+
+        document.querySelectorAll('.shard[data-target]').forEach((button) => {
+            button.addEventListener('click', () => {
+                const target = document.getElementById(button.dataset.target);
+                target?.scrollIntoView({
+                    behavior: prefersReducedMotion ? 'auto' : 'smooth',
+                    block: 'start'
+                });
+            });
+        });
+
+        const telegramUrl = 'https://t.me/OVGIER0R1';
+        const productModal = document.getElementById('productModal');
+        const modalProductName = document.getElementById('modalProductName');
+        const modalProductPrice = document.getElementById('modalProductPrice');
+        const modalProductImage = document.getElementById('modalProductImage');
+        const modalImagePlaceholder = document.getElementById('modalImagePlaceholder');
+        const sizeOptions = document.getElementById('sizeOptions');
+        const buyButton = document.getElementById('buyButton');
+        let activeProduct = null;
+        let selectedSize = '';
+
+        function openProductModal(card) {
+            const productImage = card.querySelector('.catalog-real-img');
+            const productPlaceholder = card.querySelector('.product-img');
+            activeProduct = {
+                name: card.dataset.productName,
+                price: card.dataset.productPrice,
+                category: card.dataset.productCategory,
+                sizes: card.dataset.productSizes.split(',').map((size) => size.trim()).filter(Boolean),
+                imageSrc: productImage?.getAttribute('src') || '',
+                imageAlt: productImage?.getAttribute('alt') || card.dataset.productName,
+                placeholder: productPlaceholder?.textContent.trim() || 'Предмет фото'
+            };
+            selectedSize = '';
+            modalProductName.textContent = activeProduct.name;
+            modalProductPrice.textContent = activeProduct.price;
+            modalProductImage.hidden = !activeProduct.imageSrc;
+            modalImagePlaceholder.hidden = Boolean(activeProduct.imageSrc);
+            modalProductImage.alt = activeProduct.imageAlt;
+            modalImagePlaceholder.textContent = activeProduct.placeholder;
+            if (activeProduct.imageSrc) {
+                modalProductImage.src = activeProduct.imageSrc;
+            } else {
+                modalProductImage.removeAttribute('src');
+            }
+            buyButton.disabled = true;
+            sizeOptions.replaceChildren();
+
+            activeProduct.sizes.forEach((size) => {
+                const sizeButton = document.createElement('button');
+                sizeButton.type = 'button';
+                sizeButton.className = 'size-option';
+                sizeButton.textContent = size;
+                sizeButton.addEventListener('click', () => {
+                    selectedSize = size;
+                    sizeOptions.querySelectorAll('.size-option').forEach((button) => {
+                        button.classList.toggle('is-selected', button === sizeButton);
+                    });
+                    buyButton.disabled = false;
+                });
+                sizeOptions.appendChild(sizeButton);
+            });
+
+            productModal.hidden = false;
+            productModal.setAttribute('aria-hidden', 'false');
+            document.body.classList.add('modal-open');
+            productModal.querySelector('.modal-close')?.focus({ preventScroll: true });
+        }
+
+        function closeProductModal() {
+            productModal.hidden = true;
+            productModal.setAttribute('aria-hidden', 'true');
+            document.body.classList.remove('modal-open');
+            activeProduct = null;
+            selectedSize = '';
+        }
+
+        document.querySelectorAll('.product-card').forEach((card) => {
+            card.addEventListener('click', () => openProductModal(card));
+            card.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    openProductModal(card);
+                }
+            });
+        });
+
+        document.querySelectorAll('[data-modal-close]').forEach((element) => {
+            element.addEventListener('click', closeProductModal);
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && !productModal.hidden) {
+                closeProductModal();
+            }
+        });
+
+        buyButton.addEventListener('click', async () => {
+            if (!activeProduct || !selectedSize) return;
+
+            const message = [
+                'Здравствуйте! Хочу оформить заказ.',
+                `Товар: ${activeProduct.name}`,
+                `Категория: ${activeProduct.category}`,
+                `Размер: ${selectedSize}`,
+                `Цена: ${activeProduct.price}`
+            ].join('\n');
+
+            try {
+                await navigator.clipboard?.writeText(message);
+            } catch (error) {
+                console.warn('Не удалось скопировать текст заказа в буфер обмена.', error);
+            }
+
+            window.location.href = `${telegramUrl}?text=${encodeURIComponent(message)}`;
+        });
 
         // --- 2. РЕАКЦИЯ ЖИДКОСТИ НА МЫШЬ (Параллакс фона) ---
         const backgroundBlobs = document.querySelectorAll('.blob');
         const glassNav = document.querySelector('.glass-nav');
+        const canUsePointerEffects = window.matchMedia('(pointer: fine)').matches && !prefersReducedMotion;
 
-        window.addEventListener('mousemove', (e) => {
-            // Вычисляем позицию мыши относительно центра экрана (-1 до 1)
-            const x = (e.clientX / window.innerWidth - 0.5) * 2;
-            const y = (e.clientY / window.innerHeight - 0.5) * 2;
-            
-            // Смещаем жидкие пятна в противоположную сторону от мыши
-            backgroundBlobs.forEach((blob, index) => {
-                const speed = (index + 1) * 20; // Каждое пятно двигается со своей скоростью
-                // Используем transform, комбинируя его с CSS-анимацией
-                blob.style.marginLeft = `${-x * speed}px`;
-                blob.style.marginTop = `${-y * speed}px`;
+        if (glassNav && canUsePointerEffects) {
+            window.addEventListener('mousemove', (e) => {
+                // Вычисляем позицию мыши относительно центра экрана (-1 до 1)
+                const x = (e.clientX / window.innerWidth - 0.5) * 2;
+                const y = (e.clientY / window.innerHeight - 0.5) * 2;
+
+                // Смещаем жидкие пятна в противоположную сторону от мыши
+                backgroundBlobs.forEach((blob, index) => {
+                    const speed = (index + 1) * 20; // Каждое пятно двигается со своей скоростью
+                    blob.style.marginLeft = `${-x * speed}px`;
+                    blob.style.marginTop = `${-y * speed}px`;
+                });
+
+                // Легкий наклон шапки навигации при движении мыши (эффект невесомости)
+                glassNav.style.transform = `translateX(-50%) perspective(1000px) rotateX(${-y * 5}deg) rotateY(${x * 5}deg)`;
             });
-            
-            // Легкий наклон шапки навигации при движении мыши (эффект невесомости)
-            glassNav.style.transform = `translateX(-50%) perspective(1000px) rotateX(${-y * 5}deg) rotateY(${x * 5}deg)`;
-        });
+        }
         </script>
 </body>
 </html>
